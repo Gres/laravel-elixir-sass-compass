@@ -21,7 +21,7 @@ elixir.extend("compass", function(src, outputDir, options) {
             style:       config.production ? "compressed" : "nested",
             image:       publicDir + 'images',
             font:        publicDir + 'fonts',
-            sass:        config.assetsDir + 'scss',
+            sass:        config.assetsDir + 'sass',
             css:         outputDir || config.cssOutput
         };
     options = _.extend(defaultOptions, options);
@@ -35,7 +35,7 @@ elixir.extend("compass", function(src, outputDir, options) {
         options = _.omit(options, 'modules');
     }
 
-    src = Utilities.buildGulpSrc(src, options.sass, '**/*.scss');
+    src = Utilities.buildGulpSrc(src, options.sass, '**/*.sass');
 
     var onError = function(e) {
         new Notification().error(e, 'Compass Compilation Failed!');
@@ -47,6 +47,6 @@ elixir.extend("compass", function(src, outputDir, options) {
             .pipe(compass(options)).on('error', onError);
     });
 
-    this.registerWatcher('compass', options.sass + '/**/*.scss');
+    this.registerWatcher('compass', options.sass + '/**/*.sass');
     return this.queueTask("compass");
 });
